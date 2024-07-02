@@ -1,4 +1,5 @@
 from django.db import models
+from my_sites.models import Site
 
 class Worker(models.Model):
     name = models.CharField(max_length=100)
@@ -9,12 +10,12 @@ class Worker(models.Model):
     def __str__(self):
         return self.name
 
-class Site(models.Model):
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
+# class Site(models.Model):
+#     name = models.CharField(max_length=100)
+#     location = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 class Attendance(models.Model):
     worker = models.ForeignKey(Worker, on_delete=models.CASCADE)

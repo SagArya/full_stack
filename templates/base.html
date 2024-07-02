@@ -32,8 +32,10 @@
               <a href="{% url 'home' %}" class="text-sm font-semibold leading-6 text-gray-900">Home</a>
               <a href="{% url 'about_us' %}" class="text-sm font-semibold leading-6 text-gray-900">About Us</a>
               <a href="{% url 'services' %}" class="text-sm font-semibold leading-6 text-gray-900">Services</a>
+              {% if user.is_authenticated %}
               <a href="{% url 'all_sites' %}" class="text-sm font-semibold leading-6 text-gray-900">My Sites</a>
               <a href="{% url 'worker_list' %}" class="text-sm font-semibold leading-6 text-gray-900">Attendance</a>
+              {% endif %}
             </div>
             {% comment %} <div class="hidden lg:flex lg:flex-1 lg:justify-end">
               <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
@@ -72,8 +74,10 @@
                 <a href="{% url 'home' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Home</a>
                 <a href="{% url 'about_us' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">About Us</a>
                 <a href="{% url 'services' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Services</a>
+                {% if user.is_authenticated %}
                 <a href="{% url 'all_sites' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">My Sites</a>
                 <a href="{% url 'worker_list' %}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Attendance</a>
+                {% endif %}
               </div>
               <div class="lg:flex lg:flex-1 lg:justify-end">
                 {% if user.is_authenticated %}

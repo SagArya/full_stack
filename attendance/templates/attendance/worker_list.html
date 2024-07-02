@@ -5,13 +5,17 @@
 {% block content %}
 <div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
 <div class="max-w-7xl w-full space-y-8">
-<div class="mt-4">
-    <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
-    <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
-    <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
-    <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
-    <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
-</div>
+    <div class="mt-4 bg-blue-500 py-3 px-4 rounded-lg flex justify-center">
+        <a href="{% url 'add_worker' %}" class="text-white mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <span class="text-white opacity-50">|</span>
+        <a href="{% url 'site_list' %}" class="text-white ml-4 mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <span class="text-white opacity-50">|</span>
+        <a href="{% url 'record_attendance' %}" class="text-white ml-4 mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <span class="text-white opacity-50">|</span>
+        <a href="{% url 'record_advance_payment' %}" class="text-white ml-4 mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <span class="text-white opacity-50">|</span>
+        <a href="{% url 'calculate_salary' %}" class="text-white ml-4 hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
     <h1 class="text-2xl font-bold mb-4">Workers</h1>
     <div class="container mx-auto mt-8">
         <table class="min-w-full bg-white border border-gray-300">
