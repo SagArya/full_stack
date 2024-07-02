@@ -1,0 +1,130 @@
+<!-- attendance/templates/attendance/attendance_form.html -->
+{% extends "attendance/base.html" %}
+
+{% block title %}Record Attendance{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+    <div class="mt-4">
+        <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
+    
+<div class="max-w-lg mx-auto bg-white p-10 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4">Record Attendance</h1>
+    <form method="post" action="{% url 'record_attendance' %}" class="bg-white p-4 rounded shadow ">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="worker" class="block text-gray-700">Worker:</label>
+            <select name="worker" id="worker" class="border border-gray-300 p-2 rounded w-full">
+                {% for worker in workers %}
+                    <option value="{{ worker.id }}">{{ worker.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="site" class="block text-gray-700">Site:</label>
+            <select name="site" id="site" class="border border-gray-300 p-2 rounded w-full">
+                {% for site in sites %}
+                    <option value="{{ site.id }}">{{ site.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="date" class="block text-gray-700">Date:</label>
+            <input type="date" name="date" id="date" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="present" class="block text-gray-700">Present:</label>
+            <input type="checkbox" name="present" id="present" class="border border-gray-300 p-2 rounded">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Save</button>
+    </form>
+</div>
+    <div class="mx-auto bg-white p-4 shadow-lg m-8">
+    <h2 class="text-xl font-bold mt-8 mb-4">Filter Attendance Records</h2>
+    <form method="get" class="mb-8">
+        <div class="flex flex-wrap mb-4">
+            <div class="w-full md:w-1/3 mb-4 md:mb-0">
+                <label for="start_date" class="block text-gray-700 font-bold mb-2">Start Date:</label>
+                <input type="date" name="start_date" id="start_date" value="{{ start_date }}" class="block w-full bg-gray-200 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            </div>
+            <div class="w-full md:w-1/3 mb-4 md:mb-0 md:pl-4">
+                <label for="end_date" class="block text-gray-700 font-bold mb-2">End Date:</label>
+                <input type="date" name="end_date" id="end_date" value="{{ end_date }}" class="block w-full bg-gray-200 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            </div>
+            <div class="w-full md:w-1/3 mb-4 md:mb-0 md:pl-4">
+                <label for="worker_id" class="block text-gray-700 font-bold mb-2">Worker:</label>
+                <select name="worker_id" id="worker_id" class="block w-full bg-gray-200 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option value="">All Workers</option>
+                    {% for worker in workers %}
+                        <option value="{{ worker.id }}" {% if worker.id|stringformat:"s" == worker_id %}selected{% endif %}>{{ worker.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="w-full md:w-1/3 mb-4 md:mb-0 md:pl-4">
+                <label for="site_id" class="block text-gray-700 font-bold mb-2">Site:</label>
+                <select name="site_id" id="site_id" class="block w-full bg-gray-200 border border-gray-300 rounded py-2 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                    <option value="">All Sites</option>
+                    {% for site in sites %}
+                        <option value="{{ site.id }}" {% if site.id|stringformat:"s" == site_id %}selected{% endif %}>{{ site.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="w-full md:w-1/3 md:pl-4 mt-4 md:mt-0">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Filter</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+    <h2 class="text-xl font-bold mt-8 mb-4">Attendance Records</h2>
+    <table class="min-w-full bg-white border border-gray-300 rounded shadow">
+        <thead>
+            <tr>
+                <th class="p-2 border-b">
+                    <a href="?{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}{% if request.GET.worker_id %}worker_id={{ request.GET.worker_id }}&{% endif %}{% if request.GET.site_id %}site_id={{ request.GET.site_id }}&{% endif %}sort_by=worker__name" class="hover:underline">Worker</a>
+                </th>
+                <th class="p-2 border-b">
+                    <a href="?{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}{% if request.GET.worker_id %}worker_id={{ request.GET.worker_id }}&{% endif %}{% if request.GET.site_id %}site_id={{ request.GET.site_id }}&{% endif %}sort_by=site__name" class="hover:underline">Site</a>
+                </th>
+                <th class="p-2 border-b">
+                    <a href="?{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}{% if request.GET.worker_id %}worker_id={{ request.GET.worker_id }}&{% endif %}{% if request.GET.site_id %}site_id={{ request.GET.site_id }}&{% endif %}sort_by=date" class="hover:underline">Date</a>
+                </th>
+                <th class="p-2 border-b">
+                    <a href="?{% if request.GET.start_date %}start_date={{ request.GET.start_date }}&{% endif %}{% if request.GET.end_date %}end_date={{ request.GET.end_date }}&{% endif %}{% if request.GET.worker_id %}worker_id={{ request.GET.worker_id }}&{% endif %}{% if request.GET.site_id %}site_id={{ request.GET.site_id }}&{% endif %}sort_by=present" class="hover:underline">Present</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in attendance_records %}
+            <tr class="hover:bg-gray-100 transition duration-300">
+                <td class="p-2 border-b text-red-500">{{ record.worker.name }}</td>
+                <td class="p-2 border-b">{{ record.site.name }}</td>
+                <td class="p-2 border-b">{{ record.date }}</td>
+                <td class="p-2 border-b">{{ record.present|yesno:"Yes,No" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <span class="text-gray-700">Page {{ attendance_records.number }} of {{ attendance_records.paginator.num_pages }}</span>
+        <div class="inline-flex">
+            {% if attendance_records.has_previous %}
+                <a href="?{% if start_date %}start_date={{ start_date }}&{% endif %}{% if end_date %}end_date={{ end_date }}&{% endif %}{% if worker_id %}worker_id={{ worker_id }}&{% endif %}{% if site_id %}site_id={{ site_id }}&{% endif %}{% if sort_by %}sort_by={{ sort_by }}&{% endif %}page={{ attendance_records.previous_page_number }}" class="bg-blue-500 text-white px-3 py-1 rounded-l">Previous</a>
+            {% endif %}
+            {% if attendance_records.has_next %}
+                <a href="?{% if start_date %}start_date={{ start_date }}&{% endif %}{% if end_date %}end_date={{ end_date }}&{% endif %}{% if worker_id %}worker_id={{ worker_id }}&{% endif %}{% if site_id %}site_id={{ site_id }}&{% endif %}{% if sort_by %}sort_by={{ sort_by }}&{% endif %}page={{ attendance_records.next_page_number }}" class="bg-blue-500 text-white px-3 py-1 rounded-r">Next</a>
+            {% endif %}
+        </div>
+    </div>
+    
+</div>
+</div>
+</div>
+{% endblock %}

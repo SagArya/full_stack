@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Material Report - {{ material_report.site.name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-8">
+    <div class="bg-white shadow-md rounded-lg px-8 py-6 mb-4 max-w-lg">
+        <h2 class="text-2xl font-semibold mb-4">Material Report - {{ material_report.site.name }}</h2>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Date:</span> {{ material_report.date }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Material Type:</span> {{ material_report.material_type }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Supplier Name:</span> {{ material_report.supplier_name }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Quantity:</span> {{ material_report.quantity }} {{ material_report.unit }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Vehicle No:</span> {{ material_report.vehicle_no }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Remark:</span> {{ material_report.remark }}</p>
+        </div>
+
+        <!-- Display the material image if available -->
+        {% if material_report.material_image %}
+        <div class="mb-4">
+            <img src="{{ material_report.material_image.url }}" class="rounded-lg shadow-md max-w-full h-auto" alt="Material Image">
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Challan No:</span> {{ material_report.challan_no }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Add more fields or styling as needed -->
+
+        {% comment %} <a href="{% url 'edit_material_report' report_id=material_report.id %}" class="text-blue-500 hover:text-blue-700">Edit</a> {% endcomment %}
+    </div>
+</div>
+{% endblock %}

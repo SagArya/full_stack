@@ -1,0 +1,80 @@
+<!-- attendance/templates/attendance/base.html -->
+{% extends 'base.html' %}
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Labor Management{% endblock %}</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-100 relative">
+    <header class='paddin-x py-8 z-10 w-full'>
+        <nav class="flex justify-between items-center bg-teal-600 text-white p-4 rounded-full shadow-lg max-lg:hidden">
+            <ul class='flex-1 flex justify-center items-center gap-16 '>
+                <li>
+                    <a href="{% url 'worker_list' %}" class="font-montserrat leading-normal text-lg mr-4 hover:text-gray-200 transition duration-300">Workers</a>
+                </li>
+                <li>
+                    <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+                </li>
+                <li>
+                    <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">Sites</a>
+                </li>
+                <li>
+                    <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+                </li>
+                <li>
+                    <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+                </li>
+                <li>
+                    <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+                </li>
+            </ul>
+        </nav>
+
+        <button id="menu-btn" class="lg:hidden text-gray-800 p-4 bg-transparent rounded-full focus:outline-none">
+            ☰
+        </button>
+    </header>
+
+    <!-- Sidebar for Mobile Devices -->
+    <div id="sidebar" class="fixed inset-0 bg-teal-500 text-white transform -translate-x-full transition-transform duration-300 lg:hidden">
+        <button id="close-btn" class="text-white p-4 bg-teal-600 focus:outline-none">
+            ✖
+        </button>
+        <ul class='flex flex-col items-center gap-8 mt-16'>
+            <li>
+                <a href="{% url 'worker_list' %}" class="font-montserrat leading-normal text-lg hover:text-gray-200 transition duration-300">Workers</a>
+            </li>
+            <li>
+                <a href="{% url 'add_worker' %}" class="hover:text-gray-200 transition duration-300">Add Worker</a>
+            </li>
+            <li>
+                <a href="{% url 'site_list' %}" class="hover:text-gray-200 transition duration-300">Sites</a>
+            </li>
+            <li>
+                <a href="{% url 'record_attendance' %}" class="hover:text-gray-200 transition duration-300">Record Attendance</a>
+            </li>
+            <li>
+                <a href="{% url 'record_advance_payment' %}" class="hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+            </li>
+            <li>
+                <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        document.getElementById('menu-btn').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('-translate-x-full');
+        });
+        document.getElementById('close-btn').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.add('-translate-x-full');
+        });
+    </script>
+
+    <div class="container mx-auto mt-8">
+        {% block extra_js %}{% endblock %}
+    </div>
+</body>
+</html>

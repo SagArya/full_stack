@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Add {{ report_type }}{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-lg w-full space-y-8">
+        <div class="bg-white py-8 px-6 shadow-lg rounded-lg sm:px-10 card">
+            <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-6">Add Machinery Report</h2>
+            <form class="mt-8 space-y-6" method="post" action="{% url 'add_machinery_report' site_id=site.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div class="mb-4">
+                        <label for="date" class="sr-only">Date and Time</label>
+                        <input id="date" name="date" type="datetime-local" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date and Time">
+                    </div>
+                    <div class="mb-4">
+                        <label for="machine_type" class="sr-only">Machine Type</label>
+                        <input id="machine_type" name="machine_type" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Machine Type">
+                    </div>
+                    <div class="mb-4">
+                        <label for="supplier_name" class="sr-only">Supplier Name</label>
+                        <input id="supplier_name" name="supplier_name" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Supplier Name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="registration_no" class="sr-only">Registration No</label>
+                        <input id="registration_no" name="registration_no" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Registration No">
+                    </div>
+                    <div class="mb-4">
+                        <label for="start_time" class="sr-only">Start Time</label>
+                        <input id="start_time" name="start_time" type="datetime-local" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Start Time">
+                    </div>
+                    <div class="mb-4">
+                        <label for="end_time" class="sr-only">End Time</label>
+                        <input id="end_time" name="end_time" type="datetime-local" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="End Time">
+                    </div>
+                    <div class="mb-4">
+                        <label for="challan_no" class="sr-only">Challan No</label>
+                        <input id="challan_no" name="challan_no" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Challan No">
+                    </div>
+                    <div class="mb-4">
+                        <label for="remark" class="sr-only">Remark</label>
+                        <textarea id="remark" name="remark" rows="3" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Remark"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Add Machinery Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto mt-10">
+    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Machinery Reports</h3>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Report Type</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for machinery_report in machinery_reports %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ machinery_report.date }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Machinery Report</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{% url 'view_machinery_report' report_id=machinery_report.id %}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add a simple animation -->
+<style>
+    .card {
+        animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}

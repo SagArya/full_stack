@@ -1,0 +1,50 @@
+<!-- attendance/templates/attendance/site_form.html -->
+{% extends "attendance/base.html" %}
+
+{% block title %}Add Site{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+    <div class="mt-4">
+        <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
+    
+    <h1 class="text-2xl font-bold mb-4">Add Site</h1>
+    <form method="post" action="{% url 'add_site' %}" class="bg-white p-4 rounded shadow">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700">Name:</label>
+            <input type="text" name="name" id="name" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="location" class="block text-gray-700">Location:</label>
+            <input type="text" name="location" id="location" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Save</button>
+    </form>
+
+    <h2 class="text-xl font-bold mt-8 mb-4">Site List</h2>
+    <table class="min-w-full bg-white border border-gray-300 rounded shadow">
+        <thead>
+            <tr>
+                <th class="p-2 border-b">Name</th>
+                <th class="p-2 border-b">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for site in sites %}
+            <tr class="hover:bg-gray-100 transition duration-300">
+                <td class="p-2 border-b">{{ site.name }}</td>
+                <td class="p-2 border-b">{{ site.location }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

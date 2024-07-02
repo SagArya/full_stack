@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Machinery Report - {{ machinery_report.site.name }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-8">
+    <div class="bg-white shadow-md rounded-lg px-8 py-6 mb-4 max-w-lg">
+        <h2 class="text-2xl font-semibold mb-4">Machinery Report - {{ machinery_report.site.name }}</h2>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Date:</span> {{ machinery_report.date }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Machine Type:</span> {{ machinery_report.machine_type }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Supplier Name:</span> {{ machinery_report.supplier_name }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Registration No:</span> {{ machinery_report.registration_no }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Start Time:</span> {{ machinery_report.start_time }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">End Time:</span> {{ machinery_report.end_time }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Challan No:</span> {{ machinery_report.challan_no }}</p>
+        </div>
+
+        <div class="mb-4">
+            <p class="text-lg"><span class="font-semibold">Remark:</span> {{ machinery_report.remark }}</p>
+        </div>
+
+        <!-- Add more fields or styling as needed -->
+
+        {% comment %} <a href="{% url 'edit_machinery_report' report_id=machinery_report.id %}" class="text-blue-500 hover:text-blue-700">Edit</a> {% endcomment %}
+    </div>
+</div>
+{% endblock %}

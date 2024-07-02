@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}Add {{ report_type }}{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-lg w-full space-y-8">
+        <div class="bg-white py-8 px-6 shadow-lg rounded-lg sm:px-10 card">
+            <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-6">Add Material Report</h2>
+            <form class="mt-8 space-y-6" method="post" action="{% url 'add_material_report' site_id=site.id %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div class="mb-4">
+                        <label for="date" class="sr-only">Date and Time</label>
+                        <input id="date" name="date" type="datetime-local" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Date and Time">
+                    </div>
+                    <div class="mb-4">
+                        <label for="material_type" class="sr-only">Material Type</label>
+                        <select id="material_type" name="material_type" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                            <option value="" disabled selected>Select Material</option>
+                            <option value="40MM">40MM</option>
+                            <option value="20MM">20MM</option>
+                            <option value="10MM">10MM</option>
+                            <option value="GSB">GSB</option>
+                            <option value="WMM">WMM</option>
+                            <option value="3">Grit</option>
+                            <option value="Crushed Sand">Crushed Sand</option>
+                            <option value="BC">BC</option>
+                            <option value="BM">BM</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="supplier_name" class="sr-only">Supplier Name</label>
+                        <select id="supplier_name" name="supplier_name" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                            <option value="" disabled selected>Select Supplier</option>
+                            <option value="Snehprapash Construction">Snehprapash Construction</option>
+                            <option value="Sumit Construction">Sumit Construction</option>
+                            <option value="Sagar Earth Movers">Sagar Earth Movers</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="quantity" class="sr-only">Quantity</label>
+                        <input id="quantity" name="quantity" type="number" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Quantity">
+                    </div>
+                    <div class="mb-4">
+                        <label for="unit" class="sr-only">Unit</label>
+                        <select id="unit" name="unit" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                            <option value="" disabled selected>Choose Unit</option>
+                            <option value="Brass">Brass</option>
+                            <option value="Ton">Ton</option>
+                            <option value="Nos">Nos</option>
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="vehicle_no" class="sr-only">Vehicle No</label>
+                        <input id="vehicle_no" name="vehicle_no" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Vehicle No">
+                    </div>
+                    <div class="mb-4">
+                        <label for="challan_no" class="sr-only">Challan No</label>
+                        <input id="challan_no" name="challan_no" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Challan No">
+                    </div>
+                    <div class="mb-4">
+                        <label for="material_image" class="sr-only">Material Image</label>
+                        <input id="material_image" name="material_image" type="file" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm">
+                    </div>
+                    <div class="mb-4">
+                        <label for="remark" class="sr-only">Remark</label>
+                        <textarea id="remark" name="remark" rows="3" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Remark"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Add Material Report
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto mt-10">
+    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Material Reports</h3>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sr No.</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Material Type</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier Name</th>
+                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for material_report in material_reports %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ forloop.counter }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ material_report.date }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ material_report.material_type }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ material_report.supplier_name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{% url 'view_material_report' report_id=material_report.id %}" class="text-indigo-600 hover:text-indigo-900">View Details</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Add a simple animation -->
+<style>
+    .card {
+        animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}

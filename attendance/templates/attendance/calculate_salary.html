@@ -1,0 +1,64 @@
+<!-- attendance/templates/attendance/calculate_salary.html -->
+{% extends "attendance/base.html" %}
+
+{% block title %}Calculate Salary{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+    <div class="mt-4">
+        <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
+    
+<div class="max-w-lg mx-auto bg-white p-10 rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4 rounded-xl">Calculate Salary</h1>
+    <form method="post" action="{% url 'calculate_salary' %}" class="bg-white p-4 rounded shadow">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="worker_id" class="block text-gray-700">Worker:</label>
+            <select name="worker_id" id="worker_id" class="border border-gray-300 p-2 rounded w-full">
+                {% for worker in workers %}
+                    <option value="{{ worker.id }}">{{ worker.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-4">
+            <label for="end_date" class="block text-gray-700">End Date:</label>
+            <input type="date" name="end_date" id="end_date" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Calculate</button>
+    </form>
+</div>
+    {% if salary_obj %}
+        <div class="max-w-sm rounded-2xl overflow-hidden shadow-lg m-4 bg-teal-50">
+            <div class="px-6 py-4">
+                <h3 class="text-xl font-bold mb-2">Salary Calculation Result</h3>
+                <h3 class="text-2xl text-orange-500 font-bold mb-2 ">{{ salary_obj.worker.name }}</h3>
+                <p class="text-gray-700"><span class="font-bold">Total Days Worked:</span> {{ salary_obj.total_days_worked }}</p>
+                <p class="text-gray-700"><span class="font-bold">Total Salary:</span> Rs.{{ salary_obj.total_salary }}</p>
+                <p class="text-gray-700"><span class="font-bold">Advances Deducted:</span> Rs.{{ salary_obj.advances_deducted }}</p>
+                <p class="text-red-600 font-bold"><span class="font-bold text-gray-700">Net Salary:</span> Rs.{{ salary_obj.net_salary }}</p>
+                
+                {% if created %}
+                    <p class="text-green-500">New salary record created.</p>
+                {% else %}
+                    <p class="text-green-500">Salary record updated.</p>
+                {% endif %}
+
+                <form method="post" action="{% url 'calculate_salary' %}" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="worker_id" value="{{ salary_obj.worker.id }}">
+                    <input type="hidden" name="end_date" value="{{ salary_obj.week_ending }}">
+                    <button type="submit" name="mark_paid" class="bg-green-500 text-white p-2 rounded hover:bg-green-700 transition duration-300">Mark as Paid</button>
+                </form>
+            </div>
+        </div>
+        </div>
+        </div>
+        
+    {% endif %}
+{% endblock %}

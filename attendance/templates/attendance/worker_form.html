@@ -1,0 +1,65 @@
+<!-- attendance/templates/attendance/worker_form.html -->
+{% extends "attendance/base.html" %}
+
+{% block title %}Add Worker{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+    <div class="mt-4">
+        <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
+    
+<div class="max-w-lg mx-auto bg-white p-10 rounded-lg shadow-lg">
+    
+    <h1 class="text-2xl font-bold mb-4">Add Worker</h1>
+    <form method="post" action="{% url 'add_worker' %}" class="bg-white p-4 rounded shadow">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700">Name:</label>
+            <input type="text" name="name" id="name" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="role" class="block text-gray-700">Role:</label>
+            <input type="text" name="role" id="role" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="daily_rate" class="block text-gray-700">Daily Rate:</label>
+            <input type="number" step="0.01" name="daily_rate" id="daily_rate" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <div class="mb-4">
+            <label for="contact_info" class="block text-gray-700">Contact Info:</label>
+            <input type="text" name="contact_info" id="contact_info" class="border border-gray-300 p-2 rounded w-full" required>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Save</button>
+    </form>
+</div>
+
+    <h2 class="text-xl font-bold mt-8 mb-4">Worker List</h2>
+    <table class="min-w-full bg-white border border-gray-300 rounded shadow">
+        <thead>
+            <tr>
+                <th class="p-2 border-b">Name</th>
+                <th class="p-2 border-b">Role</th>
+                <th class="p-2 border-b">Daily Rate</th>
+                <th class="p-2 border-b">Contact Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in workers %}
+            <tr class="hover:bg-gray-100 transition duration-300">
+                <td class="p-2 border-b">{{ worker.name }}</td>
+                <td class="p-2 border-b">{{ worker.role }}</td>
+                <td class="p-2 border-b">{{ worker.daily_rate }}</td>
+                <td class="p-2 border-b">{{ worker.contact_info }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}

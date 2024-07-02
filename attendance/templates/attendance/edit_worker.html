@@ -1,0 +1,46 @@
+<!-- attendance/templates/attendance/worker_form.html -->
+{% extends "attendance/base.html" %}
+
+{% block title %}Add Worker{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+    <div class="mt-4">
+        <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+        <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+        <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+        <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+        <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+    </div>
+    
+<div class="max-w-lg mx-auto bg-white p-10 rounded-lg shadow-lg">
+    
+    <h1 class="text-2xl font-bold mb-4">Edit Worker</h1>
+    <form method="post" class="bg-white p-8 rounded shadow-md max-w-lg mx-auto mt-8">
+        {% csrf_token %}
+        <div class="mb-4">
+            <label for="name" class="block text-gray-700">Name:</label>
+            <input type="text" name="name" value="{{ worker.name }}" class="border border-gray-300 p-2 rounded w-full">
+        </div>
+        <div class="mb-4">
+            <label for="role" class="block text-gray-700">Role:</label>
+            <input type="text" name="role" value="{{ worker.role }}" class="border border-gray-300 p-2 rounded w-full">
+        </div>
+        <div class="mb-4">
+            <label for="daily_rate" class="block text-gray-700">Daily Rate:</label>
+            <input type="text" name="daily_rate" value="{{ worker.daily_rate }}" class="border border-gray-300 p-2 rounded w-full">
+        </div>
+        <div class="mb-4">
+            <label for="contact_info" class="block text-gray-700">Contact Info:</label>
+            <input type="text" name="contact_info" value="{{ worker.contact_info }}" class="border border-gray-300 p-2 rounded w-full">
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Save</button>
+    </form>
+    
+    
+</div>
+
+</div>
+</div>
+{% endblock %}

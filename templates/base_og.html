@@ -1,0 +1,66 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>S P Construction!</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+  <link rel="icon" href="favicon.png">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  {% tailwind_css %}
+  {% load static %}
+</head>
+<body>
+    <!-- Header with Tailwind classes -->
+    <header class="bg-gray-100 py-3 text-center">
+        <div class="container mx-auto">
+            <img src="{% static 'img/my_logo.png' %}" alt="Company Logo" class="inline-block max-w-xs max-h-24">
+            <h1 class="text-2xl mt-3">{% block header %}SP Construction{% endblock %}</h1>
+        </div>
+    </header>
+    
+    <!-- Navigation with Tailwind classes -->
+    <nav class="">
+        <div class="flex justify-between items-center bg-teal-600 text-white p-4 rounded-lg shadow-lg max-lg:hidden">
+            <div class="flex items-center">
+                <a class="text-white text-lg mr-4" href="{% url 'home' %}">Home</a>
+                <button class="text-white md:hidden focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <a class="text-white" href="{% url 'about_us' %}">About</a>
+                <a class="text-white" href="{% url 'services' %}">Services</a>
+                {% if user.is_authenticated %}
+                <a class="text-white" href="{% url 'all_sites' %}">My Sites</a>
+                {% endif %}
+            </div>
+            <div class="ml-auto">
+                {% if user.is_authenticated %}
+                <p class="text-white">Welcome, {{ user.username }}! 
+                    <a href="{% url 'user_logout' %}" class="bg-white text-gray-900 px-4 py-2 rounded">Logout</a>
+                </p>
+                {% else %}
+                <a href="{% url 'user_login' %}" class="bg-white text-gray-900 px-4 py-2 rounded">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    
+    <main class="container mx-auto px-4 py-6">{% block content %} {% endblock %}</main>
+
+    {% block footer %}
+    <footer class="bg-gray-100 py-4">
+        <div class="container mx-auto text-center">
+            <p>Contact us: <strong>9067367390</strong> | Email: <strong>sagarpawar.arya@gmail.com</strong></p>
+            &copy; 2023 SP Construction. All rights reserved.
+        </div>
+    </footer>
+    {% endblock %}
+    
+    <!-- Tailwind CSS includes its own JavaScript functionality -->
+</body>
+</html>

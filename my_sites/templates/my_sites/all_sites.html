@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}All Sites - SP Construction{% endblock %}
+
+{% block content %}
+  <div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl w-full space-y-8">
+      <h2 class="text-3xl font-extrabold text-gray-900 text-center">All Sites</h2>
+      <div class="text-center">
+        <a href="{% url 'add_site' %}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mb-8">
+          Add Site
+        </a>
+      </div>
+      {% if sites %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for site in sites %}
+            <div class="bg-white shadow-lg rounded-lg p-6 card">
+              <h5 class="text-2xl font-semibold mb-2">{{ site.name }}</h5>
+              <p class="text-gray-600">Location: {{ site.location }}</p>
+              <p class="text-gray-600">Start Date: {{ site.start_date }}</p>
+              <div class="mt-4">
+                <a href="{% url 'site_detail' site_id=site.id %}" class="inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                  View Details
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-center text-gray-600">No sites available.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Add a simple animation -->
+  <style>
+    .card {
+      animation: fadeInUp 0.5s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+{% endblock %}

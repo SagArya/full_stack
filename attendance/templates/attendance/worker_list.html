@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Workers{% endblock %}
+
+{% block content %}
+<div class="flex flex-col items-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+<div class="max-w-7xl w-full space-y-8">
+<div class="mt-4">
+    <a href="{% url 'add_worker' %}" class="mr-4 hover:text-gray-200 transition duration-300">Add Worker</a>
+    <a href="{% url 'site_list' %}" class="mr-4 hover:text-gray-200 transition duration-300">View Sites</a>
+    <a href="{% url 'record_attendance' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Attendance</a>
+    <a href="{% url 'record_advance_payment' %}" class="mr-4 hover:text-gray-200 transition duration-300">Record Advance Payment</a>
+    <a href="{% url 'calculate_salary' %}" class="hover:text-gray-200 transition duration-300">Calculate Salary</a>
+</div>
+    <h1 class="text-2xl font-bold mb-4">Workers</h1>
+    <div class="container mx-auto mt-8">
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
+                <tr>
+                    <td class="py-2 px-4 border-b">Name</td>
+                    <td class="py-2 px-4 border-b">Role</td>
+                    <td class="py-2 px-4 border-b">Rate</td>
+                    <td class="py-2 px-4 border-b">Contact</td>
+                    <td class="py-2 px-4 border-b">Actions</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for worker in workers %}
+                <tr>
+                    <td class="py-2 px-4 border-b">{{ worker.name }}</td>
+                    <td class="py-2 px-4 border-b">{{ worker.role }}</td>
+                    <td class="py-2 px-4 border-b">{{ worker.daily_rate }}</td>
+                    <td class="py-2 px-4 border-b">{{ worker.contact_info }}</td>
+                    <td class="py-2 px-4 border-b flex gap-2">
+                        <a href="{% url 'edit_worker' worker.pk %}" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 transition duration-300">Edit</a>
+                        <a href="{% url 'delete_worker' worker.pk %}" class="bg-red-500 text-white p-2 rounded hover:bg-red-700 transition duration-300">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    
+</div>
+</div>
+
+{% endblock %}
