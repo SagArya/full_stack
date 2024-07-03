@@ -143,19 +143,22 @@ def parse_date(date_str):
         return datetime.strptime(date_str, '%B %d, %Y')
 
 def calculate_salary(request):
+    workers = Worker.objects.all()
+
     if request.method == 'POST':
         worker_id = request.POST.get('worker_id')
+        start_date_str = request.POST.get('start_date')
         end_date_str = request.POST.get('end_date')
 
         try:
+            start_date = parse_date(start_date_str)
             end_date = parse_date(end_date_str)
         except ValueError as e:
             return render(request, 'attendance/calculate_salary.html', {
-                'workers': Worker.objects.all(),
+                'workers': workers,
                 'error': str(e)
             })
 
-        start_date = end_date - timedelta(days=6)
         worker = Worker.objects.get(id=worker_id)
         attendances = Attendance.objects.filter(worker=worker, date__range=[start_date, end_date], present=True)
         advance_payments = AdvancePayment.objects.filter(worker=worker, date__range=[start_date, end_date])
@@ -176,18 +179,10 @@ def calculate_salary(request):
             }
         )
 
-        if 'mark_paid' in request.POST:
-            salary.total_days_worked = 0
-            salary.total_salary = 0
-            salary.advances_deducted = 0
-            salary.net_salary = 0
-            salary.save()
-            return redirect('worker_list')
-
         return render(request, 'attendance/calculate_salary.html', {
-            'workers': Worker.objects.all(),
+            'workers': workers,
             'salary_obj': salary,
             'created': created
         })
 
-    return render(request, 'attendance/calculate_salary.html', {'workers': Worker.objects.all()})
+    return render(request, 'attendance/calculate_salary.html', {'workers': workers})
